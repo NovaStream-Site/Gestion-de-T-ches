@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionnaire de Tâches Professionnel</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-check-double"></i>
+                <h2>TaskFlow</h2>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li class="nav-item active" data-view="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>Tableau de bord</span>
+                    </li>
+                    <li class="nav-item" data-view="tasks">
+                        <i class="fas fa-tasks"></i>
+                        <span>Toutes les tâches</span>
+                    </li>
+                    <li class="nav-item" data-view="projects">
+                        <i class="fas fa-project-diagram"></i>
+                        <span>Projets</span>
+                    </li>
+                    <li class="nav-item" data-view="calendar">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Calendrier</span>
+                    </li>
+                    <li class="nav-item" data-view="categories">
+                        <i class="fas fa-tags"></i>
+                        <span>Catégories</span>
+                    </li>
+                    <li class="nav-item" data-view="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Paramètres</span>
+                    </li>
+                </ul>
+            </nav>
+            <div class="user-profile">
+                <i class="fas fa-user-circle"></i>
+                <span>John Doe</span>
+                <i class="fas fa-sign-out-alt logout-btn"></i>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="task-search" placeholder="Rechercher des tâches...">
+                </div>
+                <div class="header-actions">
+                    <button class="add-task-btn"><i class="fas fa-plus"></i> Ajouter une tâche</button>
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-count">3</span>
+                    </div>
+                </div>
+            </header>
+
+            <section class="content-view" id="dashboard-view">
+                <h1>Tableau de bord</h1>
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <h3>Tâches en attente</h3>
+                        <p>12</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Tâches terminées</h3>
+                        <p>8</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Projets actifs</h3>
+                        <p>3</p>
+                    </div>
+                </div>
+                <h2>Prochaines tâches</h2>
+                <ul class="task-list upcoming-tasks">
+                    </ul>
+            </section>
+
+            <section class="content-view hidden" id="tasks-view">
+                <h1>Toutes les tâches</h1>
+                <div class="filter-sort">
+                    <select id="filter-status">
+                        <option value="all">Tous les statuts</option>
+                        <option value="pending">En attente</option>
+                        <option value="completed">Terminées</option>
+                    </select>
+                    <select id="sort-by">
+                        <option value="date">Date d'échéance</option>
+                        <option value="priority">Priorité</option>
+                    </select>
+                </div>
+                <ul class="task-list" id="all-tasks-list">
+                    </ul>
+            </section>
+
+            <section class="content-view hidden" id="projects-view">
+                <h1>Mes Projets</h1>
+                <button class="add-project-btn"><i class="fas fa-plus"></i> Nouveau Projet</button>
+                <div class="project-list">
+                    </div>
+            </section>
+
+            <section class="content-view hidden" id="calendar-view">
+                <h1>Calendrier des Tâches</h1>
+                <div class="calendar-grid">
+                    <div class="calendar-nav">
+                        <button id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+                        <h2 id="currentMonthYear">Juin 2024</h2>
+                        <button id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="days-of-week">
+                        <span>Lun</span><span>Mar</span><span>Mer</span><span>Jeu</span><span>Ven</span><span>Sam</span><span>Dim</span>
+                    </div>
+                    <div class="calendar-days" id="calendar-days">
+                        </div>
+                </div>
+            </section>
+
+            <section class="content-view hidden" id="categories-view">
+                <h1>Gérer les Catégories</h1>
+                <div class="category-manager">
+                    <input type="text" id="new-category-input" placeholder="Nouvelle catégorie">
+                    <button id="add-category-btn"><i class="fas fa-plus"></i> Ajouter</button>
+                    <ul class="category-list">
+                        </ul>
+                </div>
+            </section>
+
+            <section class="content-view hidden" id="settings-view">
+                <h1>Paramètres</h1>
+                <p>Paramètres de l'application, préférences utilisateur, etc.</p>
+                <div class="setting-item">
+                    <label for="theme-select">Thème de l'application :</label>
+                    <select id="theme-select">
+                        <option value="light">Clair</option>
+                        <option value="dark">Sombre</option>
+                    </select>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="task-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Ajouter/Modifier Tâche</h2>
+            <form id="task-form">
+                <input type="hidden" id="task-id">
+                <div class="form-group">
+                    <label for="task-title">Titre</label>
+                    <input type="text" id="task-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="task-description">Description</label>
+                    <textarea id="task-description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="task-due-date">Date d'échéance</label>
+                    <input type="date" id="task-due-date">
+                </div>
+                <div class="form-group">
+                    <label for="task-priority">Priorité</label>
+                    <select id="task-priority">
+                        <option value="low">Basse</option>
+                        <option value="medium">Moyenne</option>
+                        <option value="high">Haute</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="task-category">Catégorie</label>
+                    <select id="task-category">
+                        </select>
+                </div>
+                <div class="form-group">
+                    <label for="task-project">Projet</label>
+                    <select id="task-project">
+                        <option value="">Aucun projet</option>
+                        </select>
+                </div>
+                <button type="submit">Enregistrer la tâche</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Nouveau Projet</h2>
+            <form id="project-form">
+                <input type="hidden" id="project-id">
+                <div class="form-group">
+                    <label for="project-name">Nom du projet</label>
+                    <input type="text" id="project-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="project-description">Description</label>
+                    <textarea id="project-description"></textarea>
+                </div>
+                <button type="submit">Créer le projet</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
